@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: homework1
+  namespace: homework
+spec:
+  initContainers:
+    - name: init-myservice
+      image: busybox:1.28
+      command: [ "sh", "-c", "touch /homework/index.html" ]
+      volumeMounts:
+        - name: creatingindexhtml
+          mountPath: /homework
+  containers:
+    - name: nginx
+      image: nginx:1.14.2
+      ports:
+        - containerPort: 8000
+      volumeMounts:
+        - name: creatingindexhtml
+          mountPath: /etc/nginx/conf.d
+      lifecycle:
+        preStop:
+          exec:
+            command: [ "sh", "-c", "rm -f /homework/index.html" ]
+  volumes:
+    - name: creatingindexhtml
+      hostPath:
+        path: .\H1\homework
