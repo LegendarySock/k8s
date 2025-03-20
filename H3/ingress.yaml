@@ -11,7 +11,7 @@ spec:
       - host: homework.otus
         http:
           paths:
-            - path: /homepage
+            - path: /index.html
               pathType: ImplementationSpecific
               backend:
                 service:
