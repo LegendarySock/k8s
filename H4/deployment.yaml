@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homework4
+  namespace: homework
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  minReadySeconds: 10
+  strategy:
+    rollingUpdate:
+#      maxSurge: 1 сколько можем создать выше replicaset'а
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      initContainers:
+        - name: init-myservice
+          image: busybox:1.28
+          command: [ "sh", "-c", "echo 'Hello, World!' > /usr/share/nginx/html/index.html" ]
+          volumeMounts:
+            - name: nginx-html
+              mountPath: /usr/share/nginx/html
+      containers:
+        - name: nginx
+          image: nginx:1.14.2
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: nginx-html
+              mountPath: /usr/share/nginx/html
+            - name: configmap
+              mountPath: /homework/conf
+          lifecycle:
+            preStop:
+              exec:
+                command: [ "sh", "-c", "rm -f /usr/share/nginx/html/index.html" ]
+          readinessProbe:
+            httpGet:
+              path: /index.html  # Путь к эндпоинту, который возвращает статус готовности
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 1
+            successThreshold: 1
+            failureThreshold: 3
+      volumes:
+        - name: nginx-html
+          persistentVolumeClaim:
+            claimName: pvc1
+        - name: configmap
+          configMap:
+            name: configmap1
