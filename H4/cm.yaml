@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap1
+  namespace: homework
+data:
+  author.name: "VVK"
+  date.time: "22.03.2025"
+  user.name: "leso"
