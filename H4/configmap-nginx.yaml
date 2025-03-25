@@ -11,8 +11,8 @@ data:
     server_name  localhost;
     #access_log  /var/log/nginx/host.access.log  main;
     location / {
-      root /homework;
-      index index.html; #костыль, чтобы отображалось содержимое директории, даже если в ней есть файл index.html
+      root /;
+      index index.html; 
       charset   utf-8;
     }
     error_page   500 502 503 504  /50x.html;
