@@ -45,11 +45,11 @@ spec:
                 command: [ "sh", "-c", "rm -f /usr/share/nginx/index.html" ]
           readinessProbe:
             httpGet:
-              path: /index.html  # Путь к эндпоинту, который возвращает статус готовности
+              path: /  # Путь к эндпоинту, который возвращает статус готовности
               port: 8000
             initialDelaySeconds: 5
             periodSeconds: 10
-            timeoutSeconds: 1
+            timeoutSeconds: 5
             successThreshold: 1
             failureThreshold: 3
       volumes:

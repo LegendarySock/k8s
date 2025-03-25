@@ -11,7 +11,7 @@ data:
     server_name  localhost;
     #access_log  /var/log/nginx/host.access.log  main;
     location / {
-      root /;
+      root /usr/share/nginx/index.html;
       index index.html; 
       charset   utf-8;
     }
