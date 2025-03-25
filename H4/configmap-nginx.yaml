@@ -11,12 +11,12 @@ data:
     server_name  localhost;
     #access_log  /var/log/nginx/host.access.log  main;
     location / {
-      root /usr/share/nginx/index.html;
+      root /usr/share/nginx/;
       index index.html; 
       charset   utf-8;
     }
     error_page   500 502 503 504  /50x.html;
-    location = /50x.html {
+    location g= /50x.html {
         root   /usr/share/nginx/;
       }
     }
