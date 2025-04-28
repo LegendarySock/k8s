@@ -1,0 +1,11 @@
+apiVersion: v2
+name: nginx-otus
+description: helm k8s
+type: application
+version: 0.1.0
+appVersion: "1.16.0"
+dependencies:
+  - name: redis
+    version: "^19.5.0"
+    repository: "https://charts.bitnami.com/bitnami"
+    condition: redis.enabled
